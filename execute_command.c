@@ -14,6 +14,7 @@ void execute_command(char *str)
 	head = NULL;
 	tab = strtok(str, " ");
 	add_node(&head, tab);
+	i++;
 	tmp = head;
 	while (tab)
 	{
@@ -21,7 +22,7 @@ void execute_command(char *str)
 		add_node(&head, tab);
 		i++;
 	}
-	argv = malloc((i + 2) * sizeof(char *));
+	argv = malloc((i + 1) * sizeof(char *));
 	i = 0;
 	while (head)
 	{
