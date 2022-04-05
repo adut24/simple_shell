@@ -12,16 +12,18 @@ int main(void)
 
 	if (!isatty(STDIN_FILENO) || !isatty(STDOUT_FILENO))
 	{
-		nb = getline(&buffer, &bufsize, stdin);
-		if (nb == -1)
+		while (!isatty(STDIN_FILENO) || !isatty(STDOUT_FILENO))
 		{
-			printf("\n");
-			return (-1);
+			nb = getline(&buffer, &bufsize, stdin);
+			if (nb == -1)
+				return (0);
+			buffer[nb - 1] = '\0';
+			if (*buffer != '\0')
+			{
+				execute_command(buffer);
+				free(buffer);
+			}
 		}
-		buffer[nb - 1] = '\0';
-		printf("%s\n", buffer);
-		execute_command(buffer);
-		free(buffer);
 	}
 	else
 	{
@@ -35,8 +37,11 @@ int main(void)
 				return (-1);
 			}
 			buffer[nb - 1] = '\0';
-			execute_command(buffer);
-			free(buffer);
+			if (*buffer != '\0')
+			{
+				execute_command(buffer);
+				free(buffer);
+			}
 		}
 	}
 	return (0);
