@@ -19,21 +19,25 @@ int main(void)
 			return (-1);
 		}
 		buffer[nb - 1] = '\0';
+		printf("%s\n", buffer);
 		execute_command(buffer);
 		free(buffer);
 	}
-	while (1)
+	else
 	{
-		printf("€ ");
-		nb = getline(&buffer, &bufsize, stdin);
-		if (nb == -1)
+		while (1)
 		{
-			printf("\n");
-			return (-1);
+			printf("€ ");
+			nb = getline(&buffer, &bufsize, stdin);
+			if (nb == -1)
+			{
+				printf("\n");
+				return (-1);
+			}
+			buffer[nb - 1] = '\0';
+			execute_command(buffer);
+			free(buffer);
 		}
-		buffer[nb - 1] = '\0';
-		execute_command(buffer);
-		free(buffer);
 	}
 	return (0);
 }
