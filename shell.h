@@ -22,4 +22,6 @@ void execute_command(char *str);
 tok_t *add_node(tok_t **head, char *s);
 void free_list(tok_t **head);
 
+extern char **environ;
+
 #endif /* SHELL_H */
