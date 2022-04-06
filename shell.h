@@ -1,28 +1,28 @@
 #ifndef SHELL_H
 #define SHELL_H
+#ifndef _MAIINSHEL_H
+#define _MAIINSHEL_H
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include <unistd.h>
+#include <string.h>
+#include <stdlib.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <sys/stat.h>
 
-/**
- * struct tokens - linked list
- * @str: string with a token of the command
- * @next: pointer to the next node
- */
-typedef struct tokens
-{
-	char *str;
-	struct tokens *next;
-} tok_t;
+extern char *name;
 
-void execute_command(char *str);
-tok_t *add_node(tok_t **head, char *s);
-void free_list(tok_t **head);
-char *_getenv(const char *name);
+char *_strdup(char *string);
+int cmd_read(char *s, size_t __attribute__((unused))file_stream);
+char *pathfinder(char *cmd);
+char *_strcat(char *dest, char *src);
+int _strcmp(char *s1, char *s2);
+char *_strcpy(char *dest, char *src);
+int _strlen(char *s);
+void print_not_found(char *cmd);
+int call_command(char *cmd_arr[]);
+int _strncmp(char *s1, char *s2, int n);
 
-extern char **environ;
+#endif
 
-#endif /* SHELL_H */
+#endif /* MAINSHELL_H */

@@ -1,48 +1,39 @@
 #include "shell.h"
-
 /**
- * main - simple shell
- * Return: 0 or -1
+ * main - print prompt, handle EOF, read file_stream
+ * @argc: arg count (not needed)
+ * @argv: argv for command
+ * Return: Always 0.
  */
-int main(void)
-{
-	size_t bufsize = 0;
-	char *buffer = "";
-	int nb = 0;
+int main(int argc, char *argv[])
+i{
+	char *s = NULL;
+	size_t buffer_size = 0;
+	ssize_t file_stream = 0;
 
-	if (!isatty(STDIN_FILENO) || !isatty(STDOUT_FILENO))
+	(void) argc;
+	name = argv[0];
+
+	while (1)
 	{
-		while (!isatty(STDIN_FILENO) || !isatty(STDOUT_FILENO))
+		if (isatty(STDIN_FILENO) == 1)
+			write(1, "$ ", 2);
+		file_stream = getline(&s, &buffer_size, stdin);
+		if (file_stream == -1)
 		{
-			nb = getline(&buffer, &bufsize, stdin);
-			if (nb == -1)
-				return (0);
-			buffer[nb - 1] = '\0';
-			if (*buffer != '\0')
-			{
-				execute_command(buffer);
-				free(buffer);
-			}
+			if (isatty(STDIN_FILENO) == 1)
+				write(1, "\n", 1);
+			break;
 		}
+
+		if (s[file_stream - 1]  == '\n')
+			s[file_stream - 1]  = '\0';
+		if (*s == '\0')
+			continue;
+		if (cmd_read(s, file_stream) == 2)
+			break;
 	}
-	else
-	{
-		while (1)
-		{
-			printf("€ ");
-			nb = getline(&buffer, &bufsize, stdin);
-			if (nb == -1)
-			{
-				printf("\n");
-				return (-1);
-			}
-			buffer[nb - 1] = '\0';
-			if (*buffer != '\0')
-			{
-				execute_command(buffer);
-				free(buffer);
-			}
-		}
-	}
+	free(s);
+	s = NULL;
 	return (0);
 }
