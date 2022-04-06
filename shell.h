@@ -21,6 +21,7 @@ typedef struct tokens
 void execute_command(char *str);
 tok_t *add_node(tok_t **head, char *s);
 void free_list(tok_t **head);
+char *_getenv(const char *name);
 
 extern char **environ;
 
