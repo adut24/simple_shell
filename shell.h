@@ -20,7 +20,7 @@ typedef struct tokens
 	struct tokens *next;
 } tok_t;
 
-void execute_command(char *str, char *name);
+void execute_command(char *str, char *name, int nb_cmd);
 tok_t *add_node(tok_t **head, char *s);
 void free_list(tok_t **head);
 char *_getenv(const char *name);
@@ -32,6 +32,7 @@ char *_strchr(char *s, char c);
 char *_strcat(char *dest, char *src);
 char *_strdup(char *str);
 void print_error(char *name);
+void exe_cmd(char **argv, char *name);
 
 extern char **environ;
 

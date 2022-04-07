@@ -4,49 +4,66 @@
  * execute_command - parse a string and execute the command contained in it
  * @str: string to parse that contains the command and arguments
  * @name: name of the executable
+ * @nb_cmd: number of commands executed
  */
-void execute_command(char *str, char *name)
+void execute_command(char *str, char *name, int nb_cmd)
 {
 	tok_t *head = NULL, *tmp;
-	char *tab;
+	char *tab, *a;
 	char **argv;
-	int i = 0;
+	int i = 1;
 
 	tab = strtok(str, " ");
 	add_node(&head, tab);
-	i++;
 	tmp = head;
-	while (tab)
+	for (; tab; i++)
 	{
 		tab = strtok(NULL, " ");
 		add_node(&head, tab);
-		i++;
 	}
 	argv = malloc((i + 1) * sizeof(char *));
 	if (!argv)
 		return;
-	i = 0;
-	while (head)
+	for (i = 0; head; i++)
 	{
 		argv[i] = head->str;
 		head = head->next;
-		i++;
 	}
 	free_list(&tmp);
 	argv[i] = NULL;
+	a = _strdup(argv[0]);
 	argv[0] = _which(argv[0]);
-	if (fork() == 0)
+	if (!argv[0])
 	{
-		if (execve(argv[0], argv, NULL) == -1)
+		_printf("%s: %d: %s: ", name, nb_cmd, a);
+		perror("");
+	}
+	else
+	{
+		if (fork() == 0)
 		{
-			print_error(name);
-			perror("");
-			free(argv);
-			kill(getpid(), SIGSEGV);
+			exe_cmd(argv, name);
 		}
 	}
 	wait(NULL);
+	free(a);
 	free(argv);
+}
+
+/**
+ * exe_cmd - execute the command
+ * @argv: array of the command and arguments
+ * @name: name of the executable
+ */
+void exe_cmd(char **argv, char *name)
+{
+
+	if (execve(argv[0], argv, NULL) == -1)
+	{
+		print_error(name);
+		free(argv);
+		kill(getpid(), SIGSEGV);
+	}
 }
 
 /**
@@ -57,4 +74,5 @@ void print_error(char *name)
 {
 	write(STDERR_FILENO, name, _strlen(name));
 	write(STDERR_FILENO, ": ", 2);
+	perror("");
 }

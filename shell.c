@@ -10,41 +10,47 @@ int main(int ac, char **av)
 {
 	size_t bufsize = 0;
 	char *buffer = NULL;
-	int nb = 0;
+	int nb = 0, nb_cmd = 1;
 
 	if (!isatty(STDIN_FILENO) || !isatty(STDOUT_FILENO))
 	{
-		while (!isatty(STDIN_FILENO) || !isatty(STDOUT_FILENO))
+		while ((nb = getline(&buffer, &bufsize, stdin)) >= 0)
 		{
-			nb = getline(&buffer, &bufsize, stdin);
-			if (nb == -1)
-				return (0);
-			buffer[nb - 1] = '\0';
+			if (nb > 0)
+				buffer[nb - 1] = '\0';
+			else
+				buffer[nb] = '\0';
 			if (*buffer != '\0')
-				execute_command(buffer, av[0]);
+				execute_command(buffer, av[0], nb_cmd);
+			free(buffer);
+			buffer = NULL;
 		}
-	}
-	else
-	{
-		while (1)
+		if (buffer)
 		{
-			_printf("€ ");
-			nb = getline(&buffer, &bufsize, stdin);
-			if (nb == -1)
-			{
-				_printf("\n");
-				if (buffer)
-					free(buffer);
-				return (-1);
-			}
-			buffer[nb - 1] = '\0';
-			if (*buffer != '\0')
-				execute_command(buffer, av[0]);
+			free(buffer);
+			buffer = NULL;
+		}
+		return (0);
+	}
+	while (1)
+	{
+		write(STDOUT_FILENO, "$ ", 2);
+		nb = getline(&buffer, &bufsize, stdin);
+		if (nb == -1)
+		{
+			write(STDOUT_FILENO, "\n", 1);
 			if (buffer)
-			{
 				free(buffer);
-				buffer = NULL;
-			}
+			return (-1);
+		}
+		buffer[nb - 1] = '\0';
+		if (*buffer != '\0')
+			execute_command(buffer, av[0], nb_cmd);
+		nb_cmd++;
+		if (buffer)
+		{
+			free(buffer);
+			buffer = NULL;
 		}
 	}
 	(void)ac;
