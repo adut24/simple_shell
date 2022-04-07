@@ -45,7 +45,7 @@ void execute_command(char *str, char *name, int nb_cmd)
 	}
 	wait(NULL);
 	free(a);
-	free(argv);
+	free_grid(argv, i);
 }
 
 /**
@@ -71,4 +71,18 @@ void print_error(char *name)
 	write(STDERR_FILENO, name, _strlen(name));
 	write(STDERR_FILENO, ": ", 2);
 	perror("");
+}
+
+/**
+ * free_grid - free a grid
+ * @grid: grid to free
+ * @height: integer
+ */
+void free_grid(char **grid, int height)
+{
+	int i;
+
+	for (i = 0; i < height; i++)
+		free(grid[i]);
+	free(grid);
 }
