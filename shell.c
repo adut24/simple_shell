@@ -2,12 +2,14 @@
 
 /**
  * main - simple shell
+ * @ac: number of arguments
+ * @av: array of arguments
  * Return: 0 or -1
  */
-int main(void)
+int main(int ac, char **av)
 {
 	size_t bufsize = 0;
-	char *buffer = "";
+	char *buffer = NULL;
 	int nb = 0;
 
 	if (!isatty(STDIN_FILENO) || !isatty(STDOUT_FILENO))
@@ -19,30 +21,32 @@ int main(void)
 				return (0);
 			buffer[nb - 1] = '\0';
 			if (*buffer != '\0')
-			{
-				execute_command(buffer);
-				free(buffer);
-			}
+				execute_command(buffer, av[0]);
 		}
 	}
 	else
 	{
 		while (1)
 		{
-			printf("€ ");
+			_printf("€ ");
 			nb = getline(&buffer, &bufsize, stdin);
 			if (nb == -1)
 			{
-				printf("\n");
+				_printf("\n");
+				if (buffer)
+					free(buffer);
 				return (-1);
 			}
 			buffer[nb - 1] = '\0';
 			if (*buffer != '\0')
+				execute_command(buffer, av[0]);
+			if (buffer)
 			{
-				execute_command(buffer);
 				free(buffer);
+				buffer = NULL;
 			}
 		}
 	}
+	(void)ac;
 	return (0);
 }
