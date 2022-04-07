@@ -14,13 +14,15 @@
  * @str: string with a token of the command
  * @next: pointer to the next node
  */
-typedef struct tokens
+typedef struct Token
 {
 	char *str;
-	struct tokens *next;
+	struct Token *next;
 } tok_t;
 
 void execute_command(char *str, char *name, int nb_cmd);
+void interactive(char *name, char *buffer, size_t bufsize, int nb_cmd);
+void non_interactive(char *name, char *buffer, size_t bufsize, int nb_cmd);
 tok_t *add_node(tok_t **head, char *s);
 void free_list(tok_t **head);
 char *_getenv(const char *name);

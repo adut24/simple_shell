@@ -41,9 +41,7 @@ void execute_command(char *str, char *name, int nb_cmd)
 	else
 	{
 		if (fork() == 0)
-		{
 			exe_cmd(argv, name);
-		}
 	}
 	wait(NULL);
 	free(a);
@@ -57,11 +55,9 @@ void execute_command(char *str, char *name, int nb_cmd)
  */
 void exe_cmd(char **argv, char *name)
 {
-
 	if (execve(argv[0], argv, NULL) == -1)
 	{
 		print_error(name);
-		free(argv);
 		kill(getpid(), SIGSEGV);
 	}
 }
