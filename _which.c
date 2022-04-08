@@ -2,27 +2,27 @@
 
 /**
  * _which - find the path of a command
- * @file: command
+ * @cmd: command
  * Return: string of the path
  */
-char *_which(char *file)
+char *_which(char *cmd)
 {
 	struct stat st;
 	char *s = _strdup(_getenv("PATH"));
 	char *p;
 	char t[50];
 
-	if (stat(file, &st) == 0)
+	if (stat(cmd, &st) == 0)
 	{
 		free(s);
-		return (_strdup(file));
+		return (_strdup(cmd));
 	}
 
 	p = strtok(s, ":");
 	do {
 		_strcpy(t, p);
 		_strcat(t, "/");
-		_strcat(t, file);
+		_strcat(t, cmd);
 		if (stat(t, &st) == 0)
 		{
 			free(s);
