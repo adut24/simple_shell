@@ -9,13 +9,13 @@ char *_which(char *file)
 {
 	struct stat st;
 	char *s = _strdup(_getenv("PATH"));
-	char *p, *temp;
+	char *p;
 	char t[50];
 
 	if (stat(file, &st) == 0)
 	{
 		free(s);
-		return (file);
+		return (_strdup(file));
 	}
 
 	p = strtok(s, ":");
@@ -25,14 +25,14 @@ char *_which(char *file)
 		_strcat(t, file);
 		if (stat(t, &st) == 0)
 		{
-			temp = t;
 			free(s);
-			return (temp);
+			return (_strdup(t));
 		}
 		else
 			t[0] = 0;
 		p = strtok(NULL, ":");
 	} while (p != NULL);
 
+	free(s);
 	return (NULL);
 }
