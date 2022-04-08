@@ -41,11 +41,12 @@ void execute_command(char *str, char *name, int nb_cmd)
 	else
 	{
 		if (fork() == 0)
-			exe_cmd(argv, name);
+			exe_cmd(argv, a);
+		wait(NULL);
+		free(argv[0]);
 	}
-	wait(NULL);
-	free(a);
 	free(argv);
+	free(a);
 }
 
 /**
@@ -68,6 +69,7 @@ void exe_cmd(char **argv, char *name)
  */
 void print_error(char *name)
 {
+	printf("name:%s\n", name);
 	write(STDERR_FILENO, name, _strlen(name));
 	write(STDERR_FILENO, ": ", 2);
 	perror("");
