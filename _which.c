@@ -13,7 +13,10 @@ char *_which(char *file)
 	char t[50];
 
 	if (stat(file, &st) == 0)
+	{
+		free(s);
 		return (file);
+	}
 
 	p = strtok(s, ":");
 	do {
