@@ -58,7 +58,7 @@ void exe_cmd(char **argv, char *name)
 	if (execve(argv[0], argv, NULL) == -1)
 	{
 		print_error(name);
-		kill(getpid(), SIGSEGV);
+		exit(0);
 	}
 }
 

@@ -6,9 +6,7 @@
  */
 char *_getenv(const char *name)
 {
-	char *r = NULL;
 	int i, j;
-	char temp[150];
 
 	for (i = 0; environ[i]; i++)
 	{
@@ -18,10 +16,7 @@ char *_getenv(const char *name)
 				continue;
 			else if (environ[i][j] == '=' && name[j] == '\0')
 			{
-				_strcpy(temp, environ[i]);
-				r = strtok(temp, "=");
-				r = strtok(NULL, "=");
-				return (r);
+				return (&environ[i][j + 1]);
 			}
 			else
 				break;
