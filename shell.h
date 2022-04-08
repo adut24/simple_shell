@@ -35,7 +35,7 @@ char *_strcat(char *dest, char *src);
 char *_strdup(char *str);
 void print_error(char *name);
 void exe_cmd(char **argv, char *name);
-void free_grid(char **grid, int height);
+int _strcmp(char *s1, char *s2);
 
 extern char **environ;
 

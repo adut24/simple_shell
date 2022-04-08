@@ -8,7 +8,7 @@
  */
 tok_t *add_node(tok_t **head, char *s)
 {
-	tok_t *t, *new;
+	tok_t *t = NULL, *new = NULL;
 
 	new = malloc(sizeof(tok_t));
 	if (new == NULL)
