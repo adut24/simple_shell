@@ -1,22 +1,23 @@
 #include "shell.h"
 /**
  * _getenv - find the value of an environment variable
- * @name: environment variable
+ * @name: environment variable we are looking for
+ * @env: array of environment variables
  * Return: pointer to the content of the environment variable
  */
-char *_getenv(const char *name)
+char *_getenv(const char *name, char **env)
 {
 	int i, j;
 
-	for (i = 0; environ[i]; i++)
+	for (i = 0; env[i]; i++)
 	{
-		for (j = 0; environ[i][j]; j++)
+		for (j = 0; env[i][j]; j++)
 		{
-			if (environ[i][j] == name[j])
+			if (env[i][j] == name[j])
 				continue;
-			else if (environ[i][j] == '=' && name[j] == '\0')
+			else if (env[i][j] == '=' && name[j] == '\0')
 			{
-				return (&environ[i][j + 1]);
+				return (&env[i][j + 1]);
 			}
 			else
 				break;

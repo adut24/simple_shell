@@ -3,12 +3,13 @@
 /**
  * _which - find the path of a command
  * @cmd: command
+ * @env: environment variables
  * Return: string of the path
  */
-char *_which(char *cmd)
+char *_which(char *cmd, char **env)
 {
 	struct stat st;
-	char *s = _strdup(_getenv("PATH"));
+	char *s = _strdup(_getenv("PATH", env));
 	char *p;
 	char t[50];
 

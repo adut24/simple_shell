@@ -1,16 +1,16 @@
 #ifndef SHELL_H
 #define SHELL_H
 
-#include "./printf.h"
+#include "printf.h"
 #include <stdio.h>
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <signal.h>
 #include <sys/wait.h>
+#include <signal.h>
 
 /**
- * struct tokens - linked list
+ * struct Token - linked list
  * @str: string with a token of the command
  * @next: pointer to the next node
  */
@@ -20,22 +20,29 @@ typedef struct Token
 	struct Token *next;
 } tok_t;
 
-void execute_command(char *str, char *name, int nb_cmd);
-void interactive(char *name, char *buffer, size_t bufsize, int nb_cmd);
-void non_interactive(char *name, char *buffer, size_t bufsize, int nb_cmd);
-tok_t *add_node(tok_t **head, char *s);
-void free_list(tok_t **head);
-char *_getenv(const char *name);
-char *_which(char *cmd);
-int _strlen(char *s);
-char *_strcpy(char *dest, char *src);
-char *_strchr(char *s, char c);
-char *_strcat(char *dest, char *src);
-char *_strdup(char *str);
-void print_error(char *name);
-void exe_cmd(char **argv, char *cmd);
-int _strcmp(char *s1, char *s2);
+void inter(char *, char *, size_t, int, char **);
+void non_int(char *, char *, size_t, int, char **);
+void sigintHandler(int);
 
-extern char **environ;
+void execute_command(char *, char *, int, char **);
+void cmd_null(char *, char *, char **, char *, int);
+void exe_cmd(char **, char *);
+void print_error(char *);
+
+void printenv(char **);
+int exit_value(char *);
+
+tok_t *add_node(tok_t **, char *);
+void free_list(tok_t **);
+
+char *_which(char *, char **);
+char *_getenv(const char *, char **);
+
+int _strlen(char *);
+char *_strcpy(char *, char *);
+char *_strchr(char *, char);
+char *_strcat(char *, char *);
+char *_strdup(char *);
+int _strcmp(char *, char *);
 
 #endif /* SHELL_H */
