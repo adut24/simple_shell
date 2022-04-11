@@ -9,40 +9,42 @@
  */
 char *_strtok(char *src, char delim)
 {
-	static char *start;
-	static char *last_null;
-	char *ret = NULL;
+	static char *copy;
+	static int i;
+	int j = 0, world_found = -1, blanks = 0;
+	char *ret_str;
 
 	if (src)
-		start = src;
-
-	if (!start)
-		return (NULL);
-
-	if (*start == '\0')
 	{
-		if (start == last_null)
-		{
-			start = NULL;
-			return (NULL);
-		}
-		last_null = start;
-		return (start);
+		i = 0;
+		copy = src;
 	}
-
-	ret = start;
-	while (*start)
+	while (copy[i])
 	{
-		if (*start == delim)
+		while (delim[j])
 		{
-			*start = '\0';
-			last_null = start;
-			start++;
-			return (ret);
+			if (copy[i] == delim[j])
+			{
+				blanks = 1;
+				if (world_found <= 0)
+				{
+					copy[i++] = '\0';
+					ret_str = copy + world_found;
+					return (ret_str);
+				}
+			}
+			j++;
 		}
-		start++;
+		j = 0;
+		if (world_found == -1 && !blanks)
+		{
+			world_found = i;
+		}
+		blanks = 0;
+		i++;
 	}
-	last_null = start;
-
-	return (ret);
+	if (world_found == -1)
+		return (0);
+		ret_str = copy + world_found;
+		return (ret_str);
 }
