@@ -26,6 +26,7 @@ void sigintHandler(int);
 
 void execute_command(char *, char *, int, char **);
 void cmd_null(char *, char *, char **, char *, int);
+void cmd_valid(char *name, char **cmd, char *copy_cmd, char **env);
 void exe_cmd(char **, char *);
 void print_error(char *);
 

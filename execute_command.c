@@ -36,19 +36,36 @@ void execute_command(char *str, char *name, int nb_cmd, char **env)
 	if (!cmd[0])
 		cmd_null(name, str, cmd, copy_cmd, nb_cmd);
 	else
-	{
-		if (_strcmp(copy_cmd, "env") == 0 || _strcmp(copy_cmd, "printenv") == 0)
-			printenv(env);
-		else
-		{
-			if (fork() == 0)
-				exe_cmd(cmd, name);
-			wait(NULL);
-		}
-	}
+		cmd_valid(name, cmd, copy_cmd, env);
 	free(cmd[0]);
 	free(cmd);
 	free(copy_cmd);
+}
+
+/**
+ * cmd_valid - execute if command is in PATH
+ *
+ * @name: name of the executable
+ * @cmd: the command to execute
+ * @copy_cmd: copy of the command
+ * @env: environment variables
+ */
+
+void cmd_valid(char *name, char **cmd, char *copy_cmd, char **env)
+{
+	if (_strcmp(copy_cmd, "env") == 0
+		|| _strcmp(copy_cmd, "/bin/env") == 0
+		|| _strcmp(copy_cmd, "/usr/bin/env") == 0
+		|| _strcmp(copy_cmd, "printenv") == 0
+		|| _strcmp(copy_cmd, "/bin/printenv") == 0
+		|| _strcmp(copy_cmd, "/usr/bin/printenv") == 0)
+		printenv(env);
+	else
+	{
+		if (fork() == 0)
+			exe_cmd(cmd, name);
+		wait(NULL);
+	}
 }
 
 /**
