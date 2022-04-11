@@ -19,7 +19,7 @@ char *_which(char *cmd, char **env)
 		return (_strdup(cmd));
 	}
 
-	p = strtok(s, ":");
+	p = _strtok(s, ':');
 	do {
 		_strcpy(t, p);
 		_strcat(t, "/");
@@ -31,7 +31,7 @@ char *_which(char *cmd, char **env)
 		}
 		else
 			t[0] = 0;
-		p = strtok(NULL, ":");
+		p = _strtok(NULL, ':');
 	} while (p != NULL);
 
 	free(s);
