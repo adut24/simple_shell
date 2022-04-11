@@ -1,21 +1,6 @@
 #include "shell.h"
 
 /**
- * printenv - print all environment variables
- * @env: array of environment variables
- */
-void printenv(char **env)
-{
-	int i;
-
-	for (i = 0; env[i]; i++)
-	{
-		write(STDOUT_FILENO, env[i], _strlen(env[i]));
-		write(STDOUT_FILENO, "\n", 1);
-	}
-}
-
-/**
  * exit_value - calculate the value exit will have
  * @n: supposed value of exit
  * Return: -1 for illegal numbers or a number between 0 and 255

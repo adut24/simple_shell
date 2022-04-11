@@ -7,7 +7,8 @@
  * @nb_cmd: number of commands executed
  * @env: environment variables
  */
-void execute_command(char *str, char *name, int nb_cmd, char **env)
+void execute_command(char *str, char *buffer, char *name, int nb_cmd,
+					char **env)
 {
 	tok_t *head = NULL, *tmp;
 	char *tab, *copy_cmd, **cmd;
@@ -34,38 +35,16 @@ void execute_command(char *str, char *name, int nb_cmd, char **env)
 	copy_cmd = _strdup(cmd[0]);
 	cmd[0] = _which(cmd[0], env);
 	if (!cmd[0])
-		cmd_null(name, str, cmd, copy_cmd, nb_cmd);
-	else
-		cmd_valid(name, cmd, copy_cmd, env);
-	free(cmd[0]);
-	free(cmd);
-	free(copy_cmd);
-}
-
-/**
- * cmd_valid - execute if command is in PATH
- *
- * @name: name of the executable
- * @cmd: the command to execute
- * @copy_cmd: copy of the command
- * @env: environment variables
- */
-
-void cmd_valid(char *name, char **cmd, char *copy_cmd, char **env)
-{
-	if (_strcmp(copy_cmd, "env") == 0
-		|| _strcmp(copy_cmd, "/bin/env") == 0
-		|| _strcmp(copy_cmd, "/usr/bin/env") == 0
-		|| _strcmp(copy_cmd, "printenv") == 0
-		|| _strcmp(copy_cmd, "/bin/printenv") == 0
-		|| _strcmp(copy_cmd, "/usr/bin/printenv") == 0)
-		printenv(env);
+		cmd_null(name, buffer, str, cmd, copy_cmd, nb_cmd);
 	else
 	{
 		if (fork() == 0)
-			exe_cmd(cmd, name);
+			exe_cmd(cmd, name, env);
 		wait(NULL);
 	}
+	free(cmd[0]);
+	free(cmd);
+	free(copy_cmd);
 }
 
 /**
@@ -76,7 +55,8 @@ void cmd_valid(char *name, char **cmd, char *copy_cmd, char **env)
  * @copy_cmd: copy of the command
  * @nb_cmd: number of command typed
  */
-void cmd_null(char *name, char *str, char **cmd, char *copy_cmd, int nb_cmd)
+void cmd_null(char *name, char *buffer, char *str, char **cmd, char *copy_cmd,
+				int nb_cmd)
 {
 	int value = 0;
 
@@ -92,6 +72,8 @@ void cmd_null(char *name, char *str, char **cmd, char *copy_cmd, int nb_cmd)
 			free(copy_cmd);
 			if (str)
 				free(str);
+			if (buffer)
+				free(buffer);
 			exit(value);
 		}
 	}
@@ -106,10 +88,11 @@ void cmd_null(char *name, char *str, char **cmd, char *copy_cmd, int nb_cmd)
  * exe_cmd - execute the command
  * @cmd: array of the command and arguments
  * @name: name of the executable
+ * @env: environment variables
  */
-void exe_cmd(char **cmd, char *name)
+void exe_cmd(char **cmd, char *name, char **env)
 {
-	if (execve(cmd[0], cmd, NULL) == -1)
+	if (execve(cmd[0], cmd, env) == -1)
 	{
 		print_error(name);
 		exit(0);

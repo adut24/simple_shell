@@ -41,7 +41,8 @@ int main(int ac, char **av, char **env)
  */
 void inter(char *name, char *buffer, size_t bufsize, int nb_cmd, char **env)
 {
-	int nb = 0;
+	int nb = 0, len = 0;
+	char *str = NULL, *tmp = NULL;
 
 	write(STDOUT_FILENO, "$ ", 2);
 	nb = getline(&buffer, &bufsize, stdin);
@@ -54,8 +55,22 @@ void inter(char *name, char *buffer, size_t bufsize, int nb_cmd, char **env)
 	}
 	if (nb > 0)
 		buffer[nb - 1] = '\0';
-	if (*buffer != '\0')
-		execute_command(buffer, name, nb_cmd, env);
+	if (*buffer)
+	{
+		str = strtok(buffer, ";");
+		while (str)
+		{
+			len = _strlen(str);
+			if (str[len - 1] == ' ')
+				str[len - 1] = '\0';
+			if (str[0] == ' ')
+				str++;
+			tmp = _strdup(str);
+			execute_command(tmp, buffer, name, nb_cmd, env);
+			str = strtok(NULL, ";");
+			free(tmp);
+		}
+	}
 	if (buffer)
 	{
 		free(buffer);
@@ -73,14 +88,15 @@ void inter(char *name, char *buffer, size_t bufsize, int nb_cmd, char **env)
  */
 void non_int(char *name, char *buffer, size_t bufsize, int nb_cmd, char **env)
 {
-	int nb = 0;
+	int nb = 0, len = 0;
+	char *str = NULL, *tmp = NULL;
 
 	while ((nb = getline(&buffer, &bufsize, stdin)) >= 0)
 	{
 		if (nb > 0)
 			buffer[nb - 1] = '\0';
 		if (*buffer != '\0')
-			execute_command(buffer, name, nb_cmd, env);
+			execute_command(buffer, buffer, name, nb_cmd, env);
 		free(buffer);
 		buffer = NULL;
 	}

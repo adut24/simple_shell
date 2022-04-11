@@ -24,13 +24,11 @@ void inter(char *, char *, size_t, int, char **);
 void non_int(char *, char *, size_t, int, char **);
 void sigintHandler(int);
 
-void execute_command(char *, char *, int, char **);
-void cmd_null(char *, char *, char **, char *, int);
-void cmd_valid(char *name, char **cmd, char *copy_cmd, char **env);
-void exe_cmd(char **, char *);
+void execute_command(char *, char *, char *, int, char **);
+void cmd_null(char *, char *, char *, char **, char *, int);
+void exe_cmd(char **, char *, char **);
 void print_error(char *);
 
-void printenv(char **);
 int exit_value(char *);
 
 tok_t *add_node(tok_t **, char *);
@@ -45,5 +43,7 @@ char *_strchr(char *, char);
 char *_strcat(char *, char *);
 char *_strdup(char *);
 int _strcmp(char *, char *);
+char *_strncpy(char *, char *, int);
+char *_strtok(char *, char);
 
 #endif /* SHELL_H */
