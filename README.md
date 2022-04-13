@@ -16,7 +16,6 @@ $ gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
 The Simple Shell is the second team project realised in Holberton School. The purpose is to replicate the shell (`sh`) present in Linux. The shell takes different prompts and interprets them to execute them.
 
 ## Output
-
 This simple shell works in "interactive mode":
 ```
 $ ./hsh
