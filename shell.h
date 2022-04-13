@@ -20,12 +20,12 @@ typedef struct Token
 	struct Token *next;
 } tok_t;
 
-void inter(char *, char *, size_t, int, char **);
-void non_int(char *, char *, size_t, int, char **);
+void inter(char *, char *, size_t, int, char **, int *);
+void non_int(char *, char *, size_t, int, char **, int *);
 void sigintHandler(int);
 
-void execute_command(char *, char *, char *, int, char **);
-void cmd_null(char *, char *, char *, char **, char *, int);
+void execute_command(char *, char *, int, char **, int *);
+void cmd_null(char *, char *, char **, char *, int, int *);
 void exe_cmd(char **, char *, char **);
 void print_error(char *);
 
@@ -43,7 +43,5 @@ char *_strchr(char *, char);
 char *_strcat(char *, char *);
 char *_strdup(char *);
 int _strcmp(char *, char *);
-char *_strncpy(char *, char *, int);
-char *_strtok(char *, char);
 
 #endif /* SHELL_H */
