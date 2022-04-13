@@ -10,7 +10,7 @@ int exit_value(char *n)
 	unsigned int nb = 0;
 
 	if (!n)
-		return (0);
+		return (-2);
 
 	for (; *n; n++)
 	{
