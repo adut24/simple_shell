@@ -43,7 +43,7 @@ int main(int ac, char **av, char **env)
 void inter(char *name, char *buffer, size_t bufsize, int nb_cmd, char **env,
 			int *status)
 {
-	int nb = 0, i = 0;
+	int nb = 0, i = 0, check = 0;
 
 	write(STDOUT_FILENO, "> ", 2);
 	nb = getline(&buffer, &bufsize, stdin);
@@ -60,11 +60,18 @@ void inter(char *name, char *buffer, size_t bufsize, int nb_cmd, char **env,
 	{
 		while (buffer[i] != '#' && buffer[i])
 			i++;
-		if (buffer[i - 1] == ' ')
-			buffer[i - 1] = '\0';
-		else
-			buffer[i] = '\0';
-		execute_command(buffer, name, nb_cmd, env, status);
+		buffer[i] = '\0';
+
+		for (i = 0; buffer[i]; i++)
+		{
+			if (buffer[i] != ' ')
+			{
+				check = 1;
+				break;
+			}
+		}
+		if (check == 1)
+			execute_command(buffer, name, nb_cmd, env, status);
 	}
 	if (buffer)
 	{
@@ -85,7 +92,7 @@ void inter(char *name, char *buffer, size_t bufsize, int nb_cmd, char **env,
 void non_int(char *name, char *buffer, size_t bufsize, int nb_cmd, char **env,
 				int *status)
 {
-	int nb = 0, i = 0;
+	int nb = 0, i = 0, check = 0;
 
 	while ((nb = getline(&buffer, &bufsize, stdin)) >= 0)
 	{
@@ -95,11 +102,18 @@ void non_int(char *name, char *buffer, size_t bufsize, int nb_cmd, char **env,
 	{
 		while (buffer[i] != '#' && buffer[i])
 			i++;
-		if (buffer[i - 1] == ' ')
-			buffer[i - 1] = '\0';
-		else
-			buffer[i] = '\0';
-		execute_command(buffer, name, nb_cmd, env, status);
+		buffer[i] = '\0';
+
+		for (i = 0; buffer[i]; i++)
+		{
+			if (buffer[i] != ' ')
+			{
+				check = 1;
+				break;
+			}
+		}
+		if (check == 1)
+			execute_command(buffer, name, nb_cmd, env, status);
 	}
 		free(buffer);
 		buffer = NULL;
@@ -118,6 +132,6 @@ void non_int(char *name, char *buffer, size_t bufsize, int nb_cmd, char **env,
 void sigintHandler(int sig)
 {
 	write(STDOUT_FILENO, "\n", 1);
-	write(STDOUT_FILENO, "$ ", 2);
+	write(STDOUT_FILENO, "> ", 2);
 	(void)sig;
 }

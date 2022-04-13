@@ -16,7 +16,6 @@ unsigned int check_delim(char c, const char *str)
 	}
 	return (0);
 }
-
 /**
  * _strtok - Token A String Into Token (strtrok)
  * @str: String

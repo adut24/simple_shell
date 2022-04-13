@@ -93,6 +93,7 @@
 <p>Your shell will be compiled this way:</p>
 <pre><code>gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
 </code></pre>
+
 <h2 id="output">Output</h2>
 <ul>
 <li>Unless specified otherwise, your program <strong>must have the exact same output</strong> as <code>sh (/bin/sh)</code> as well as the exact same error output.</li>
