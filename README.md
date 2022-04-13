@@ -14,6 +14,9 @@ $ ./hsh
 >
 ```
 
+## Read the man page
+To read the man of the simple shell, use the command `man ./man_1_simple_shell` in the terminal when you are inside the repository.
+
 ## Description
 The Simple Shell is the second team project realised in Holberton School. The purpose is to replicate the shell (`sh`) present in Linux. The shell takes different prompts and interprets them to execute them.
 
@@ -59,3 +62,7 @@ $ ./hsh
 
 ## Tasks
 Here are all the tasks of this project:
+### 0. README, man, AUTHORS
+* Write a [README](https://github.com/adut24/simple_shell/blob/main/README.md)
+* Write a [man](https://github.com/adut24/simple_shell/blob/main/man_1_simple_shell) for your shell.
+* You should have an [AUTHORS](https://github.com/adut24/simple_shell/blob/main/AUTHORS) file at the root of your repository, listing all individuals having contributed content to the repository.
