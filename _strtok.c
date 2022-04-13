@@ -8,6 +8,7 @@
 unsigned int check_delim(char c, const char *str)
 {
 	unsigned int i;
+
 	for (i = 0; str[i] != '\0'; i++)
 	{
 		if (c == str[i])
@@ -26,6 +27,7 @@ char *_strtok(char *str, const char *delim)
 	static char *ts;
 	static char *nt;
 	unsigned int i;
+
 	if (str != NULL)
 		nt = str;
 	ts = nt;
