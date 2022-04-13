@@ -5,26 +5,26 @@
  * @ac: number of arguments
  * @av: array of arguments
  * @env: array of environment variables
- * Return: 0 or 1 or exit value
+ * Return: 0, 1, 2 or exit value
  */
 int main(int ac, char **av, char **env)
 {
 	size_t bufsize = 0;
 	char *buffer = NULL;
-	int nb_cmd = 1;
+	int nb_cmd = 1, status = 0;
 
 	if (signal(SIGINT, sigintHandler) == SIG_ERR)
 		return (1);
 
 	if (!isatty(STDIN_FILENO) || !isatty(STDOUT_FILENO))
 	{
-		non_int(av[0], buffer, bufsize, nb_cmd, env);
-		return (0);
+		non_int(av[0], buffer, bufsize, nb_cmd, env, &status);
+		return (status);
 	}
 
 	while (1)
 	{
-		inter(av[0], buffer, bufsize, nb_cmd, env);
+		inter(av[0], buffer, bufsize, nb_cmd, env, &status);
 		nb_cmd++;
 	}
 	(void)ac;
@@ -38,11 +38,12 @@ int main(int ac, char **av, char **env)
  * @bufsize: size of the buffer
  * @nb_cmd: number of command executed
  * @env: environment variables
+ * @status: status of function
  */
-void inter(char *name, char *buffer, size_t bufsize, int nb_cmd, char **env)
+void inter(char *name, char *buffer, size_t bufsize, int nb_cmd, char **env,
+			int *status)
 {
-	int nb = 0, len = 0;
-	char *str = NULL, *tmp = NULL;
+	int nb = 0, i = 0;
 
 	write(STDOUT_FILENO, "$ ", 2);
 	nb = getline(&buffer, &bufsize, stdin);
@@ -51,25 +52,19 @@ void inter(char *name, char *buffer, size_t bufsize, int nb_cmd, char **env)
 		write(STDOUT_FILENO, "\n", 1);
 		if (buffer)
 			free(buffer);
-		exit(0);
+		exit(*status);
 	}
 	if (nb > 0)
 		buffer[nb - 1] = '\0';
 	if (*buffer)
 	{
-		str = strtok(buffer, ";");
-		while (str)
-		{
-			len = _strlen(str);
-			if (str[len - 1] == ' ')
-				str[len - 1] = '\0';
-			if (str[0] == ' ')
-				str++;
-			tmp = _strdup(str);
-			execute_command(tmp, buffer, name, nb_cmd, env);
-			str = strtok(NULL, ";");
-			free(tmp);
-		}
+		while (buffer[i] != '#' && buffer[i])
+			i++;
+		if (buffer[i - 1] == ' ')
+			buffer[i - 1] = '\0';
+		else
+			buffer[i] = '\0';
+		execute_command(buffer, name, nb_cmd, env, status);
 	}
 	if (buffer)
 	{
@@ -85,18 +80,27 @@ void inter(char *name, char *buffer, size_t bufsize, int nb_cmd, char **env)
  * @bufsize: size of the buffer
  * @nb_cmd: number of command executed
  * @env: environment variables
+ * @status: status of function
  */
-void non_int(char *name, char *buffer, size_t bufsize, int nb_cmd, char **env)
+void non_int(char *name, char *buffer, size_t bufsize, int nb_cmd, char **env,
+				int *status)
 {
-	int nb = 0, len = 0;
-	char *str = NULL, *tmp = NULL;
+	int nb = 0, i = 0;
 
 	while ((nb = getline(&buffer, &bufsize, stdin)) >= 0)
 	{
 		if (nb > 0)
 			buffer[nb - 1] = '\0';
-		if (*buffer != '\0')
-			execute_command(buffer, buffer, name, nb_cmd, env);
+	if (*buffer)
+	{
+		while (buffer[i] != '#' && buffer[i])
+			i++;
+		if (buffer[i - 1] == ' ')
+			buffer[i - 1] = '\0';
+		else
+			buffer[i] = '\0';
+		execute_command(buffer, name, nb_cmd, env, status);
+	}
 		free(buffer);
 		buffer = NULL;
 	}
