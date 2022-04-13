@@ -81,7 +81,7 @@ void cmd_null(char *name, char *str, char **cmd, char *copy_cmd, int nb_cmd,
 			if (str)
 				free(str);
 			if (value == -2)
-				exit(2);
+				exit(*status);
 			exit(value);
 		}
 	}
