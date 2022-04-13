@@ -65,7 +65,11 @@ void cmd_null(char *name, char *str, char **cmd, char *copy_cmd, int nb_cmd,
 {
 	int value = 0;
 
-	if (_strcmp(copy_cmd, "exit") == 0)
+	if (_strcmp(copy_cmd, "setenv") == 0)
+		return;
+	else if (_strcmp(copy_cmd, "unsetenv") == 0)
+		return;
+	else if (_strcmp(copy_cmd, "exit") == 0)
 	{
 		value = exit_value(cmd[1]);
 		if (value == -1)
