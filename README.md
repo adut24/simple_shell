@@ -93,21 +93,6 @@
 <p>Your shell will be compiled this way:</p>
 <pre><code>gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
 </code></pre>
-<h2 id="commands">Commands</h2>
-<p>At minimum, this shell handles the following commands to display file contents on the command line:<br>
-<code>cat</code> :Concatenates the file and gives output on standard output.<br>
-<code>less</code>: View files instead of opening the file. Allows backward and forward movement.<br>
-This shell handles the following file and directory manipulation commands:<br>
-<code>mkdir</code>: Creates a directory and accepts directory name as next parameter.<br>
-<code>rm</code> and <code>rm -r</code>: Used to delete files and directories.<br>
-<code>touch</code>: Creates a file or updates a file.<br>
-And the following basic command line navigation commands:<br>
-<code>ls</code>: Displays list of all files and folders in the current directory.<br>
-<code>cd</code>: Changes the directory.<br>
-<code>du</code>: Shows disk usage.<br>
-<code>pwd</code>: Shows the present working directory.<br>
-<code>man</code> + <code>cmd</code>: Shows the manual entry for any given command.<br>
-<code>exit</code>: Quits the simple_shell program.</p>
 <h2 id="output">Output</h2>
 <ul>
 <li>Unless specified otherwise, your program <strong>must have the exact same output</strong> as <code>sh (/bin/sh)</code> as well as the exact same error output.</li>
