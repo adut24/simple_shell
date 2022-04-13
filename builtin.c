@@ -28,3 +28,20 @@ int exit_value(char *n)
 
 	return (nb);
 }
+
+/**
+ * print_env - Print the environnement variables
+ *
+ * @env: The variables
+ */
+
+void print_env(char **env)
+{
+	int i;
+
+	for (i = 0; env[i]; i++)
+	{
+		write(STDOUT_FILENO, env[i], _strlen(env[i]));
+		write(STDOUT_FILENO, "\n", 1);
+	}
+}

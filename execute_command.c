@@ -34,16 +34,21 @@ void execute_command(char *str, char *name, int nb_cmd, char **env,
 	free_list(&tmp);
 	cmd[i] = NULL;
 	copy_cmd = _strdup(cmd[0]);
-	cmd[0] = _which(cmd[0], env);
-	if (!cmd[0])
-		cmd_null(name, str, cmd, copy_cmd, nb_cmd, status);
+	if (_strcmp(copy_cmd, "env") == 0)
+		print_env(env);
 	else
-		exe_cmd(cmd, name, env);
-	wait(status);
-	free(cmd[0]);
+	{
+		cmd[0] = _which(cmd[0], env);
+		if (!cmd[0])
+			cmd_null(name, str, cmd, copy_cmd, nb_cmd, status);
+		else
+			exe_cmd(cmd, name, env);
+		wait(status);
+		*status /= 256;
+		free(cmd[0]);
+	}
 	free(cmd);
 	free(copy_cmd);
-	*status /= 256;
 }
 
 /**
