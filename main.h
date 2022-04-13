@@ -45,6 +45,8 @@ char *_strchr(char *, char);
 char *_strcat(char *, char *);
 char *_strdup(char *);
 int _strcmp(char *, char *);
+unsigned int check_delim(char c, const char *str);
+char *_strtok(char *str, const char *delim);
 
 /* Printf function */
 

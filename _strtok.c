@@ -1,50 +1,64 @@
-#include "shell.h"
+#include "main.h"
+/**
+ * check_delim - Checks If A Character Match Any Char *
+ * @c: Character To Check
+ * @str: String To Check
+ * Return: 1 Succes, 0 Failed
+ */
+unsigned int check_delim(char c, const char *str)
+{
+	unsigned int i;
+
+	for (i = 0; str[i] != '\0'; i++)
+	{
+		if (c == str[i])
+			return (1);
+	}
+	return (0);
+}
 
 /**
- * _strtok - tokenizes a string by a charactere delimiter.
- * @src: the string to be tokenize on the first call, should be NULL
- * when tokenizing the same string.
- * @delim: the delimiter to tokenize by.
- * Return: pointer to the beginning of the new token.
+ * _strtok - Token A String Into Token (strtrok)
+ * @str: String
+ * @delim: Delimiter
+ * Return: Pointer To The Next Token Or NULL
  */
-char *_strtok(char *src, char delim)
+char *_strtok(char *str, const char *delim)
 {
-	static char *copy;
-	static int i;
-	int j = 0, world_found = -1, blanks = 0;
-	char *ret_str;
+	static char *ts;
+	static char *nt;
+	unsigned int i;
 
-	if (src)
+	if (str != NULL)
+		nt = str;
+	ts = nt;
+	if (ts == NULL)
+		return (NULL);
+	for (i = 0; ts[i] != '\0'; i++)
 	{
-		i = 0;
-		copy = src;
+		if (check_delim(ts[i], delim) == 0)
+			break;
 	}
-	while (copy[i])
+	if (nt[i] == '\0' || nt[i] == '#')
 	{
-		while (delim[j])
-		{
-			if (copy[i] == delim[j])
-			{
-				blanks = 1;
-				if (world_found <= 0)
-				{
-					copy[i++] = '\0';
-					ret_str = copy + world_found;
-					return (ret_str);
-				}
-			}
-			j++;
-		}
-		j = 0;
-		if (world_found == -1 && !blanks)
-		{
-			world_found = i;
-		}
-		blanks = 0;
-		i++;
+		nt = NULL;
+		return (NULL);
 	}
-	if (world_found == -1)
-		return (0);
-		ret_str = copy + world_found;
-		return (ret_str);
+	ts = nt + i;
+	nt = ts;
+	for (i = 0; nt[i] != '\0'; i++)
+	{
+		if (check_delim(nt[i], delim) == 1)
+			break;
+	}
+	if (nt[i] == '\0')
+		nt = NULL;
+	else
+	{
+		nt[i] = '\0';
+		nt = nt + i + 1;
+		if (*nt == '\0')
+			nt = NULL;
+	}
+	return (ts);
 }
