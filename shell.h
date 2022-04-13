@@ -1,13 +1,15 @@
 #ifndef SHELL_H
 #define SHELL_H
 
-#include "printf.h"
 #include <stdio.h>
 #include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
 #include <signal.h>
+#include <stdarg.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 /**
  * struct Token - linked list
@@ -43,5 +45,28 @@ char *_strchr(char *, char);
 char *_strcat(char *, char *);
 char *_strdup(char *);
 int _strcmp(char *, char *);
+
+/* Printf function */
+
+/**
+ * struct Specifier - Struct specifier
+ * @c: The specifier
+ * @f: The function
+ */
+typedef struct Specifier
+{
+	char c;
+	int (*f)(va_list);
+} spec_t;
+
+
+int _printf(const char *format, ...);
+int (*get_specifier(char c))(va_list);
+int _putchar(char c);
+int _puts(char *str);
+void print_number(int n);
+int print_string(va_list);
+int countDigit(int n);
+int print_int(va_list);
 
 #endif /* SHELL_H */
