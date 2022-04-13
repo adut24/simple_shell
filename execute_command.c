@@ -42,8 +42,10 @@ void execute_command(char *str, char *name, int nb_cmd, char **env,
 		if (!cmd[0])
 			cmd_null(name, str, cmd, copy_cmd, nb_cmd, status);
 		else
+		{
 			exe_cmd(cmd, name, env);
-		wait(status);
+			wait(status);
+		}
 		*status /= 256;
 		free(cmd[0]);
 	}
