@@ -45,7 +45,7 @@ void inter(char *name, char *buffer, size_t bufsize, int nb_cmd, char **env,
 {
 	int nb = 0, i = 0;
 
-	write(STDOUT_FILENO, "$ ", 2);
+	write(STDOUT_FILENO, "> ", 2);
 	nb = getline(&buffer, &bufsize, stdin);
 	if (nb == -1)
 	{
