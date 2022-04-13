@@ -2,9 +2,7 @@
 .SH NAME
 .BR "simple_shell " "\- command interpreter (shell)"
 .SH SYNOPSIS
-.B #include \(dqshell.h\(dq
-
-.BR "simple_shell " "[command_file]"
+.B #include \(dqmain.h\(dq
 .SH DESCRIPTION
 .BR "simple_shell " "is a custom command interpreter for the system."
 .SS Overview
