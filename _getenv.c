@@ -1,4 +1,4 @@
-#include "shell.h"
+#include "main.h"
 /**
  * _getenv - find the value of an environment variable
  * @name: environment variable we are looking for
