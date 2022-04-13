@@ -2,7 +2,7 @@
 
 ![Team project Simple Shell](./pictures/shell.png)
 
-## Installation
+## Installation and Usage
 
 This project was realised on **Ubuntu 20.04 LTS** and compiled with **GCC 9.4.0**. Depending on the changes, it may not work on future version. If you want to download and test our project, follow these steps:
 
@@ -10,6 +10,8 @@ This project was realised on **Ubuntu 20.04 LTS** and compiled with **GCC 9.4.0*
 $ git clone git@github.com:adut24/simple_shell.git
 $ cd simple_shell
 $ gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
+$ ./hsh
+>
 ```
 
 ## Description
@@ -41,5 +43,19 @@ hsh main.c shell.c
 | `/bin/ls` | Command executed by putting the path of it |
 | `pwd` | Command executed by just putting the command |
 | `ls -l` | Handle arguments to the command |
-| `exit [status]` | built-in to exit with a specific status |
-| `env` | built-in to print all the environment variables |
+| `exit [status]` | Built-in to exit with a specific status |
+| `env` | Built-in to print all the environment variables |
+| `#` | Comments |
+
+## Examples
+```
+$ ./hsh
+> pwd
+/home/alexandre/repo/simple_shell
+> ^C
+> ls -l main.c
+-rw-rw-r-- 1 alexandre alexandre 2567 avril 13 15:26 main.c
+```
+
+## Tasks
+Here are all the tasks of this project:
