@@ -39,6 +39,9 @@ void free_list(tok_t **);
 char *_which(char *, char **);
 char *_getenv(const char *, char **);
 
+unsigned int check_delim(char c, const char *str);
+char *_strtok(char *str, const char *delim);
+
 int _strlen(char *);
 char *_strcpy(char *, char *);
 char *_strchr(char *, char);
