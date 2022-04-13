@@ -2,7 +2,6 @@
 
 ![Team project Simple Shell](./pictures/shell.png)
 
-<<<<<<< HEAD
 ## Installation
 
 This project was realised on **Ubuntu 20.04 LTS** and compiled with **GCC 9.4.0**. Depending on the changes, it may not work on future version. If you want to download and test our project, follow these steps:
