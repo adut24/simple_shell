@@ -15,12 +15,12 @@ void execute_command(char *str, char *name, int nb_cmd, char **env,
 	char *tab, *copy_cmd, **cmd;
 	int i = 1;
 
-	tab = _strtok(str, " ");
+	tab = _strtok(str, " \t\n");
 	add_node(&head, tab);
 	tmp = head;
 	for (; tab; i++)
 	{
-		tab = _strtok(NULL, " ");
+		tab = _strtok(NULL, " \t\n");
 		add_node(&head, tab);
 	}
 	cmd = malloc((i + 1) * sizeof(char *));
