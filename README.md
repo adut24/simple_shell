@@ -199,3 +199,9 @@ Handle comments (`#`).
 * The file contains all the commands that your shell should run before exiting
 * The file should contain one command per line
 * In this mode, the shell should not print a prompt and should not read from `stdin`
+
+## Authors
+
+* [Pierre DUREAU](https://github.com/Pierre-Dureau) - dureaupierre53@gmail.com
+* [Mustapha ABOURAR](https://github.com/Devmustroc) - 4250@holbertonschool.com
+* [Alexandre DUTERTRE](https://github.com/adut24) - dutertre.alexandre@laposte.net
