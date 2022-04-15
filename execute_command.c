@@ -46,7 +46,8 @@ void execute_command(char *str, char *name, int nb_cmd, char **env,
 			exe_cmd(cmd, name, env);
 			wait(status);
 		}
-		*status /= 256;
+		if (*status != 127)
+			*status /= 256;
 		free(cmd[0]);
 	}
 	free(cmd);
@@ -95,8 +96,8 @@ void cmd_null(char *name, char *str, char **cmd, char *copy_cmd, int nb_cmd,
 	}
 	else
 	{
-		_printf("%s: %d: %s: ", name, nb_cmd, copy_cmd);
-		perror("");
+		_printf("%s: %d: %s: not found\n", name, nb_cmd, copy_cmd);
+		*status = 127;
 	}
 }
 
