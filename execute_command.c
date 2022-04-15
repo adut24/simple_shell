@@ -34,13 +34,12 @@ void execute_command(char *str, char *name, int nb_cmd, char **env,
 	free_list(&tmp);
 	cmd[i] = NULL;
 	copy_cmd = _strdup(cmd[0]);
-	if (_strcmp(copy_cmd, "env") == 0)
-		print_env(env);
-	else
+
+	if (check_env(copy_cmd, env) != 0)
 	{
 		cmd[0] = _which(cmd[0], env);
 		if (!cmd[0])
-			cmd_null(name, str, cmd, copy_cmd, nb_cmd, status, env);
+			cmd_null(name, str, cmd, copy_cmd, nb_cmd, status);
 		else
 		{
 			exe_cmd(cmd, name, env);
@@ -55,6 +54,25 @@ void execute_command(char *str, char *name, int nb_cmd, char **env,
 }
 
 /**
+ * check_env - Check env command
+ *
+ * @copy_cmd: The command
+ * @env: The environment variables
+ * Return: 0 if success
+ */
+
+int check_env(char *copy_cmd, char **env)
+{
+	if (_strcmp(copy_cmd, "env") == 0)
+	{
+		print_env(env);
+		return (0);
+	}
+	else
+		return (1);
+}
+
+/**
  * cmd_null - executed if a command isn't in PATH
  * @name: name of the executable
  * @str: original string of command typed
@@ -64,7 +82,7 @@ void execute_command(char *str, char *name, int nb_cmd, char **env,
  * @status: status of function
  */
 void cmd_null(char *name, char *str, char **cmd, char *copy_cmd, int nb_cmd,
-				int *status, char **env)
+				int *status)
 {
 	int value = 0;
 
@@ -87,8 +105,6 @@ void cmd_null(char *name, char *str, char **cmd, char *copy_cmd, int nb_cmd,
 			free(copy_cmd);
 			if (str)
 				free(str);
-			if (env)
-				free_grid(env);
 			if (value == -2)
 				exit(*status);
 			exit(value);
