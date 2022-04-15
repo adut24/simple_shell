@@ -27,12 +27,14 @@ void non_int(char *, char *, size_t, int, char **, int *);
 void sigintHandler(int);
 
 void execute_command(char *, char *, int, char **, int *);
-void cmd_null(char *, char *, char **, char *, int, int *);
+void cmd_null(char *, char *, char **, char *, int, int *, char **);
 void exe_cmd(char **, char *, char **);
 void print_error(char *);
 
 int exit_value(char *);
 void print_env(char **);
+void free_grid(char **);
+char **copy_env(char **);
 
 tok_t *add_node(tok_t **, char *);
 void free_list(tok_t **);

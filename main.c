@@ -7,18 +7,22 @@
  * @env: array of environment variables
  * Return: 0, 1, 2 or exit value
  */
-int main(int ac, char **av, char **env)
+int main(int ac, char **av, char **envp)
 {
 	size_t bufsize = 0;
 	char *buffer = NULL;
 	int nb_cmd = 1, status = 0;
+	char **env;
 
 	if (signal(SIGINT, sigintHandler) == SIG_ERR)
 		return (1);
 
+	env = copy_env(envp);
+
 	if (!isatty(STDIN_FILENO) || !isatty(STDOUT_FILENO))
 	{
 		non_int(av[0], buffer, bufsize, nb_cmd, env, &status);
+		free_grid(env);
 		return (status);
 	}
 
@@ -52,6 +56,8 @@ void inter(char *name, char *buffer, size_t bufsize, int nb_cmd, char **env,
 		write(STDOUT_FILENO, "\n", 1);
 		if (buffer)
 			free(buffer);
+		if (env)
+			free_grid(env);
 		exit(*status);
 	}
 	if (nb > 0)
