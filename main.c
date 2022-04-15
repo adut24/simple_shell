@@ -66,8 +66,13 @@ void inter(char *name, char *buffer, size_t bufsize, int nb_cmd, char **env,
 	{
 		while (buffer[i] != '#' && buffer[i])
 			i++;
-		if (buffer[i - 1] == ' ')
-			buffer[i] = '\0';
+		if (i > 0)
+		{
+			if (buffer[i - 1] == ' ')
+				buffer[i] = '\0';
+		}
+		else
+			buffer[0] = '\0';
 
 		for (i = 0; buffer[i]; i++)
 		{
@@ -79,6 +84,7 @@ void inter(char *name, char *buffer, size_t bufsize, int nb_cmd, char **env,
 		}
 		if (check == 1)
 			execute_command(buffer, name, nb_cmd, env, status);
+
 	}
 	if (buffer)
 	{
@@ -109,8 +115,7 @@ void non_int(char *name, char *buffer, size_t bufsize, int nb_cmd, char **env,
 	{
 		while (buffer[i] != '#' && buffer[i])
 			i++;
-		if (buffer[i - 1] == ' ')
-			buffer[i] = '\0';
+		buffer[i] = '\0';
 
 		for (i = 0; buffer[i]; i++)
 		{
