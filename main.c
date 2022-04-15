@@ -66,7 +66,8 @@ void inter(char *name, char *buffer, size_t bufsize, int nb_cmd, char **env,
 	{
 		while (buffer[i] != '#' && buffer[i])
 			i++;
-		buffer[i] = '\0';
+		if (buffer[i - 1] == ' ')
+			buffer[i] = '\0';
 
 		for (i = 0; buffer[i]; i++)
 		{
@@ -108,7 +109,8 @@ void non_int(char *name, char *buffer, size_t bufsize, int nb_cmd, char **env,
 	{
 		while (buffer[i] != '#' && buffer[i])
 			i++;
-		buffer[i] = '\0';
+		if (buffer[i - 1] == ' ')
+			buffer[i] = '\0';
 
 		for (i = 0; buffer[i]; i++)
 		{
